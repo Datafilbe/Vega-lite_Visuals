@@ -1,0 +1,49 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "config": {
+    "view": {"stroke": null},
+    "title": {
+      "fontSize": 18,
+      "subtitleFontSize": 15,
+      "anchor": "start",
+      "dy": -15
+    },
+    "axis": {"grid": false, "titleFontSize": 14},
+    "font": "Calibri"
+  },
+  "width": 400,
+  "height": 300,
+  "title": {
+    "text": "IMDB vs Rotten Tomatoes",
+    "subtitle": "where do they agree?"
+  },
+  "data": {"url": "data/movies.json"},
+  "mark": {"type": "circle", "opacity": 1, "color": "lightgrey"},
+  "encoding": {
+    "x": {"field": "IMDB Rating", "type": "quantitative"},
+    "y": {"field": "Rotten Tomatoes Rating", "type": "quantitative"},
+    "color": {
+      "condition": [
+        {
+          "test": "datum['IMDB Rating'] === null || datum['Rotten Tomatoes Rating'] === null",
+          "value": ""
+        },
+        {
+          "test": "datum['IMDB Rating'] * 10 <= datum['Rotten Tomatoes Rating'] + 5 && datum['Rotten Tomatoes Rating'] <= (datum['IMDB Rating'] * 10) + 5",
+          "value": "#268F96"
+        }
+      ]
+    },
+    "opacity": {
+      "condition": {
+        "test": "datum['IMDB Rating'] * 10 > datum['Rotten Tomatoes Rating'] + 5 || datum['Rotten Tomatoes Rating'] > (datum['IMDB Rating'] * 10) + 5",
+        "value": 0.5
+      }
+    },
+    "tooltip": [
+      {"field": "Title"},
+      {"field": "IMDB Rating", "title": "IMDB"},
+      {"field": "Rotten Tomatoes Rating", "title": "Rotten Tomatoes"}
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "config": {
+    "view": {"stroke": null},
+    "title": {
+      "fontSize": 18,
+      "subtitleFontSize": 15,
+      "anchor": "start",
+      "dy": -15
+    },
+    "axis": {"grid": false, "titleFontSize": 14},
+    "font": "Calibri"
+  },
+  "width": 400,
+  "height": 300,
+  "title": {
+    "text": "IMDB vs Rotten Tomatoes",
+    "subtitle": "who gives higher ratings?"
+  },
+  "data": {"url": "data/movies.json"},
+  "mark": {"type": "circle", "opacity": 1, "color": "lightgrey"},
+  "encoding": {
+    "x": {"field": "IMDB Rating", "type": "quantitative"},
+    "y": {"field": "Rotten Tomatoes Rating", "type": "quantitative"},
+    "color": {
+      "condition": [
+        {
+          "test": "datum['IMDB Rating'] === null || datum['Rotten Tomatoes Rating'] === null",
+          "value": ""
+        },
+        {
+          "test": "datum['IMDB Rating'] * 20 < datum['Rotten Tomatoes Rating']",
+          "value": "red"
+        },
+        {
+          "test": "datum['Rotten Tomatoes Rating'] * 2 < datum['IMDB Rating'] * 10",
+          "value": "orange"
+        }
+      ]
+    },
+    "opacity": {
+      "condition": {
+        "test": "datum['IMDB Rating'] * 20 >= datum['Rotten Tomatoes Rating'] && datum['Rotten Tomatoes Rating'] * 2 >= datum['IMDB Rating'] * 10",
+        "value": 0.3
+      }
+    },
+    "tooltip": [
+      {"field": "Title"},
+      {"field": "IMDB Rating", "title": "IMDB"},
+      {"field": "Rotten Tomatoes Rating", "title": "Rotten Tomatoes"}
+    ]
+  }
+}
