@@ -1,0 +1,31 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "config": {
+    "view": {"stroke": null},
+    "title": {
+      "fontSize": 18,
+      "subtitleFontSize": 15,
+      "anchor": "start",
+      "dy": -15
+    },
+    "axis": {"grid": false, "titleFontSize": 14},
+    "font": "Calibri"
+  },
+  "width": 400,
+  "height": 300,
+  "title": {
+    "text": "Movie Ratings on the Internet",
+    "subtitle": "IMDB vs Rotten Tomatoes"
+  },
+  "data": {"url": "data/movies.json"},
+  "mark": {"type": "circle", "opacity": 0.75, "color": "#268F96"},
+  "encoding": {
+    "x": {"field": "IMDB Rating", "type": "quantitative"},
+    "y": {"field": "Rotten Tomatoes Rating", "type": "quantitative"},
+    "tooltip": [
+      {"field": "Title"},
+      {"field": "IMDB Rating", "title": "IMDB"},
+      {"field": "Rotten Tomatoes Rating", "title": "Rotten Tomatoes"}
+    ]
+  }
+}
